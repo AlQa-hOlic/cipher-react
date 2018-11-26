@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "react-dom";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { HashRouter, Switch, Route, Redirect } from "react-router-dom";
 
 import App from "./App";
 import Appp from "./Appp";
@@ -10,11 +10,12 @@ import "./css/skeleton.css";
 import "./css/index.css";
 
 render(
-  <BrowserRouter>
+  <HashRouter>
     <Switch>
       <Route path="/cn" component={App} />
       <Route path="/en" component={Appp} />
+      <Redirect path="/" to="/en" />
     </Switch>
-  </BrowserRouter>,
+  </HashRouter>,
   document.getElementById("root")
 );
