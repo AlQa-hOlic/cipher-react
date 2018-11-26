@@ -32,6 +32,7 @@ export default class App extends Component {
   }
   shift(letter, step, shiftUp) {
     let result = letter;
+    if (letter === " ") return result;
     let index = -1;
     if (shiftUp) {
       index = chars.findIndex(l => l === letter);
