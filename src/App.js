@@ -53,7 +53,7 @@ export default class App extends Component {
           name="input"
           value={this.state.input}
           onChange={this.handleChange}
-          placeholder="Enter Text..."
+          placeholder="输入文本"
         />
         <input
           type="number"
@@ -63,7 +63,7 @@ export default class App extends Component {
           placeholder="0"
         />
         <button onClick={() => this.eval()}>Convert</button>
-        <h3>{"The encrypted text is : "}</h3>
+        <h3>{"加密的文本是,"}</h3>
         <h5>{this.state.cipher}</h5>
       </div>
     );
