@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 
 import styles from "./css/index.css";
 
-//Chinese Version
+//English Version
 const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()<>?:\"|{}_+1234567890§±-=[];',./\\".split(
   ""
 );
-export default class App extends Component {
+export default class Appp extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -52,15 +52,15 @@ export default class App extends Component {
   render() {
     return (
       <div className={styles.app}>
-        <Link className={styles.link} to="/en">
-          EN
+        <Link className={styles.link} to="/cn">
+          CN
         </Link>
         <input
           type="text"
           name="input"
           value={this.state.input}
           onChange={this.handleChange}
-          placeholder="输入文本"
+          placeholder="Enter the text..."
         />
         <input
           type="number"
@@ -69,8 +69,8 @@ export default class App extends Component {
           onChange={this.handleChange}
           placeholder="0"
         />
-        <button onClick={() => this.eval()}>转换</button>
-        <h3>{"加密的文本是,"}</h3>
+        <button onClick={() => this.eval()}>Convert</button>
+        <h3>{"The Ciphered Text is..."}</h3>
         <h5>{this.state.cipher}</h5>
       </div>
     );
