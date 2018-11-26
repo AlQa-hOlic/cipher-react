@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import styles from "./css/index.css";
 
 //English Version
-const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()<>?:\"|{}_+1234567890§±-=[];',./\\".split(
+const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()<>?:|{}_+1234567890§±-=[];,.".split(
   ""
 );
 export default class Appp extends Component {
@@ -13,7 +13,7 @@ export default class Appp extends Component {
     this.state = {
       input: "",
       step: "1",
-      isCalcVisible: false,
+      isEncrypt: true,
       cipher: "",
       _step: 1
     };
@@ -22,6 +22,11 @@ export default class Appp extends Component {
     this.shift = this.shift.bind(this);
   }
   handleChange(env) {
+    if (env.target.name === "select") {
+      this.setState({
+        isEncrypt: env.target.value === "encrypt" ? true : false
+      });
+    }
     if (this.state.input === "") this.setState({ cipher: "" });
     if (env.target.name === "step") {
       let temp = env.target.value === "" ? 0 : Number(env.target.value);
@@ -32,25 +37,43 @@ export default class Appp extends Component {
   }
   shift(letter, step, shiftUp) {
     let result = letter;
-    if (letter === " ") return result;
+    if (
+      letter === " " ||
+      letter === "/" ||
+      letter === "\\" ||
+      letter === "'" ||
+      letter === '"'
+    )
+      return result;
     let index = -1;
+    index = chars.findIndex(l => l === letter);
     if (shiftUp) {
-      index = chars.findIndex(l => l === letter);
+      console.log("encrypt");
       index += step;
-      result = chars[index];
+      if (index > chars.length - 1) {
+        index -= chars.length;
+      }
+    } else {
+      console.log("decrypt");
+      index -= step;
+      if (index < 0) {
+        index += chars.length;
+      }
     }
+    result = chars[index];
     return result;
   }
   eval() {
-    const { input, _step } = this.state;
+    const { input, _step, isEncrypt } = this.state;
     let resultChars = [];
     let inputChars = input.split("");
     resultChars = inputChars.map(char => {
-      return this.shift(char, _step, true);
+      return this.shift(char, _step, isEncrypt);
     });
     this.setState({ cipher: resultChars.join("") });
   }
   render() {
+    console.log(this.state.cipher);
     return (
       <div className={styles.app}>
         <Link className={styles.link} to="/cn">
@@ -70,6 +93,14 @@ export default class Appp extends Component {
           onChange={this.handleChange}
           placeholder="0"
         />
+        <select
+          name="select"
+          onChange={this.handleChange}
+          value={this.state.isEncrypt ? "encrypt" : "decrypt"}
+        >
+          <option value="encrypt">Encrypt</option>
+          <option value="decrypt">Decrypt</option>
+        </select>
         <button onClick={() => this.eval()}>Convert</button>
         <h3>{"The Ciphered Text is..."}</h3>
         <h5>{this.state.cipher}</h5>
